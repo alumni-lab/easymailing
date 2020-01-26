@@ -6,7 +6,7 @@ const app       = express();
 require('dotenv').config();
 
 // library to send email
-const nodemailer = require("nodemailer");
+const nodemailer  = require("nodemailer");
 
 // package to handle data from body
 const bodyParser  = require("body-parser");
@@ -26,7 +26,7 @@ app.use((err, req, res, next) => {
 
 
 // the route to get email data from front-end
-router.post("/send_email", (req, res) => {
+app.post("/send_email", async (req, res) => {
 
   // assuming data received from fe:
   const {
@@ -34,7 +34,8 @@ router.post("/send_email", (req, res) => {
     subject,
     message
   } = req.body;
-console.log(from, " + ", subject, " + ", message);
+console.log("===>", from, " + ", subject, " + ", message);
+// return res.send("okay");
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
   let testAccount = await nodemailer.createTestAccount();
@@ -56,25 +57,27 @@ console.log(from, " + ", subject, " + ", message);
     // to: "bar@example.com, baz@example.com", // list of receivers
     to: "tony.kieling@gmail.com", // list of receivers
     subject: "Hello ✔", // Subject line
-    text: "Hello world?", // plain text body
-    html: "<b>Hello world?</b>" // html body
+    // text: "Hello world?", // plain text body
+    html: `<b>Hello world?</b><br>From: ${from} <br> Subject: ${subject} <br> Message: ${message}` // html body
   });
 
   console.log("Message sent: %s", info.messageId);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
+  
   // Preview only available when sending through an Ethereal account
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+
+  return res.send(info.messageId ? info.messageId : "something bad happend");
 
 });
 
 
 
 // front-end being public and served
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './public', 'index.html'))
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, './public', 'index.html'))
+// });
 
 
 // server running
