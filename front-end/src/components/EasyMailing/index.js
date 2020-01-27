@@ -8,8 +8,8 @@ export default function EasyMailing(props) {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    console.log(email, subject, message);
   }, [email, subject, message]);
+
   const emailPicker = event => {
     setEmail(event.target.value);
   };
@@ -24,17 +24,14 @@ export default function EasyMailing(props) {
 
   const sendMessage = () => {
     axios
-      .post(props.baseUrl + props.path, {
+      .post(`${props.baseUrl}/${props.path}`, {
         // If key and values have the same name you can skip adding them
         email,
         subject,
         message,
       })
-      .then((response) => {
-        console.log(response);
-      })
       .catch((error) => {
-        console.log(error);
+        console.log('There was an error with EasyMailing! Try again later!', error);
       });
   };
 
