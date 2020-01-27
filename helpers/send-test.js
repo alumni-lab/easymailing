@@ -1,3 +1,9 @@
+
+/**
+ * in case to test with ethereal
+ * (it not being used for now)
+ */
+
 const nodemailer = require("nodemailer");
 
 const test = async(req, res) => {

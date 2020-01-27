@@ -5,15 +5,9 @@ const app       = express();
 // able to have a .env file to store sensible info without being public
 require('dotenv').config();
 
-const config = {
-  pass: 'password',
-  user: 'user',
-  path: '/mail'
-}
 
-const test = require("./send-test.js");
-
-const send_email = require("./send_email.js")(config);
+// importing method to send email
+const send_email = require("./send_email.js");
 
 
 // package to handle data from body
@@ -21,6 +15,7 @@ const bodyParser  = require("body-parser");
 // package being used
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 // checks for JSON malformatted messages
 app.use((err, req, res, next) => {
   if (err) {
@@ -36,7 +31,6 @@ app.use((err, req, res, next) => {
 // the route to get email data from front-end
 app.post("/send_email", send_email);
 
-app.use(test);
 
 // front-end being public and served
 // app.get('*', (req, res) => {

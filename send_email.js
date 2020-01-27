@@ -1,65 +1,43 @@
-// library to send email
-const nodemailer  = require("nodemailer");
+const nodemailer  = require("nodemailer");    // library to send email
 
-module.exports = (config) => {
 
-  console.log("config", config);
+// method to send email
+const send_email = async(req, res) => {
   // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    // host: process.env.host,
-    // port: process.env.port,
-    // secure: process.env.secure, // true for 465, false for other ports
+  const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.user, // generated ethereal user
-      pass: '3@syma1l1ngLHLJan26th' // generated ethereal password      
+      user: process.env.user,
+      pass: process.env.password
     }
   });
-  //config
-  // mail path /mail
-  // mail user 
-  // mail pass
 
-  // method to send email...
-  const send_email = async (req, res, next) => {
-console.log("data coming from client:", req.body);
-    if (config.user === "user") {
-      req.x = req.body;
-      return next();
-    }
 
-  // assuming data received from fe:
-    const {
-      email,
-      subject,
-      message
-    } = req.body;
+  // data received from fe:
+  const {
+    email,
+    subject,
+    message
+  } = req.body;  
 
-    // if req path and method match config path then send mail
-    // otherwise pass on execution with next();
-    
-  console.log("process.env.user", process.env.user)
-  console.log("process.env.passsword", process.env.password)
-  
-  
-    try {
-      // send mail with defined transport object
-      let info = await transporter.sendMail({
-        from: email,
-        to: "tony.kieling@gmail.com", // list of receivers
-        subject: "Hello ✔", // Subject line
-        html: `<b>Hello world?</b><br>From: ${from} <br> Subject: ${subject} <br> Message: ${message}` // html body
-      });
-  
-      console.log("Message sent: %s", info.messageId);
-  
-      return res.send(info.messageId ? nodemailer.getTestMessageUrl(info) : "something bad happend");
-  
-    } catch (err) {
-      console.log("### Error: ", err.message);
-      return res.send(`###ERROR: ${err.message}`);
-    }
+  try {
+    const info = await transporter.sendMail({
+      from: email,
+      to: "tony.kieling@gmail.com",
+      subject: "Hello ✔",
+      html: `<b>Hello world?</b><br> <b>From</b>: ${email} <br> <b>Subject:</b> ${subject} <br> <b>Message:</b> ${message}`
+    });
+
+    // sending back to client's app
+    return res.send(info.messageId 
+      ? `${JSON.stringify({message: "SUCCESS"})} \n ${info.response} \n messageId = ${info.messageId}\n${JSON.stringify(info.envelope)}` 
+      : "something bad happend" );
+
+  } catch (err) { // handling errors
+    console.log("### Error: ", err.message);
+    return res.send(`###ERROR: ${err.message}`);
   }
-
-  return send_email;
 }
+
+
+module.exports = send_email;
