@@ -2,7 +2,6 @@ const nodemailer  = require("nodemailer");    // library to send email
 
 
 const make_send_email = (config) => {
-
   // method to send email
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
@@ -15,7 +14,10 @@ const make_send_email = (config) => {
 
   const send_email = async(req, res, next) => {
 console.log("req.path", req.path);
-    if (req.path === config.path) { //this matches the config path
+console.log("config", config);
+console.log("req.body", req.body);
+console.log("req.method", req.method);
+    if (req.path === config.path && req.method === "POST") { //this matches the config path
       
         // data received from fe:
         const {
@@ -27,9 +29,9 @@ console.log("req.path", req.path);
         try {
           const info = await transporter.sendMail({
             from: email,
-            to: ["tony.kieling@gmail.com", "chih.chia.chuang@gmail.com"],
-            subject: "Hello ✔",
-            html: `<b>Hello world?</b><br> <b>From</b>: ${email} <br> <b>Subject:</b> ${subject} <br> <b>Message:</b> ${message}`
+            to: config.to,
+            subject,
+            html: `<b>From</b>: ${email} <br> <b>Subject:</b> ${subject} <br> <b>Message:</b> ${message}`
           });
       
           // sending back to client's app

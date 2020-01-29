@@ -22,14 +22,16 @@ export default function EasyMailing(props) {
     setMessage(event.target.value);
   };
 
-  const sendMessage = () => {
+  const sendMessage = (event) => {
+    event.preventDefault()
     axios
       .post(`${props.baseUrl}/${props.path}`, {
         // If key and values have the same name you can skip adding them
-        email,
-        subject,
-        message,
+          email,
+          subject,
+          message,
       })
+      .then(console.log)
       .catch((error) => {
         console.log('There was an error with EasyMailing! Try again later!', error);
       });
@@ -37,7 +39,7 @@ export default function EasyMailing(props) {
 
   return (
     <div>
-      <form className="flex-container">
+      <form className="flex-container" onSubmit={sendMessage}>
         <input
           placeholder="Email Address"
           type="email"
@@ -61,7 +63,7 @@ export default function EasyMailing(props) {
           onChange={messagePicker}
           required
         ></textarea>
-        <button type="submit" className="submit" onSubmit={sendMessage}>
+        <button type="submit" className="submit">
           Send Message
         </button>
       </form>

@@ -5,6 +5,8 @@ const app       = express();
 // able to have a .env file to store sensible info without being public
 require('dotenv').config();
 
+const cors = require('cors');
+app.use(cors());
 
 // importing method to send email
 const make_send_email = require("./module/");
@@ -26,11 +28,12 @@ app.use((err, req, res, next) => {
   else
     next()
 });
-
+console.log("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
 
 const config = {
   user: process.env.user,
   password: process.env.password,
+  to: 'sales@mycompany.com',
   path: '/mail',
 }
 const send_email = make_send_email(config)
