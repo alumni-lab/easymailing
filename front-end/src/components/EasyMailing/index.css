@@ -1,0 +1,36 @@
+.flex-container {
+  margin: 2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.email {
+  width: 40%;
+  border-radius: 20px;
+  padding: 0.5%;
+  margin: 1%;
+}
+
+.subject {
+  width: 40%;
+  border-radius: 20px;
+  padding: 0.5%;
+  margin: 1%;
+}
+
+.message {
+  width: 40%;
+  height: 300px;
+  border-radius: 20px;
+  padding: 0.5%;
+  margin: 1%;
+}
+
+.submit {
+  height: 35px;
+  width: 10%;
+  border-radius: 20px;
+  background-color: greenyellow;
+}
