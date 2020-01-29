@@ -7,7 +7,7 @@ require('dotenv').config();
 
 
 // importing method to send email
-const send_email = require("./send_email.js");
+const make_send_email = require("./module/");
 
 
 // package to handle data from body
@@ -28,8 +28,18 @@ app.use((err, req, res, next) => {
 });
 
 
-// the route to get email data from front-end
-app.post("/send_email", send_email);
+const config = {
+  user: process.env.user,
+  password: process.env.password,
+  path: '/mail',
+}
+const send_email = make_send_email(config)
+app.use(send_email);
+
+
+
+// // the route to get email data from front-end
+// app.post("/send_email", send_email);
 
 
 // front-end being public and served
