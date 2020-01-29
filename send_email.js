@@ -23,7 +23,7 @@ const send_email = async(req, res) => {
   try {
     const info = await transporter.sendMail({
       from: email,
-      to: "tony.kieling@gmail.com",
+      to: ["tony.kieling@gmail.com", "chih.chia.chuang@gmail.com"],
       subject: "Hello ✔",
       html: `<b>Hello world?</b><br> <b>From</b>: ${email} <br> <b>Subject:</b> ${subject} <br> <b>Message:</b> ${message}`
     });

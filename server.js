@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use((err, req, res, next) => {
   if (err) {
     res.status(409).json({
-      error: err.message
+      error: `Sorry, ERROR: ${err.message}`
     });
   }
   else
