@@ -1,0 +1,26 @@
+{
+  "name": "easymailing",
+  "version": "1.0.1",
+  "description": "Express Middleware for sending email.",
+  "main": "index.js",
+  "dependencies": {
+    "nodemailer": "^6.4.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alumni-lab/easymailing.git"
+  },
+  "keywords": [
+    "send",
+    "email"
+  ],
+  "author": "Alumni Lab - LHL",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alumni-lab/easymailing/issues"
+  },
+  "homepage": "https://github.com/alumni-lab/easymailing#readme"
+}

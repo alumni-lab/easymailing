@@ -12,13 +12,9 @@ const make_send_email = (config) => {
     }
   });
 
+  
   const send_email = async(req, res, next) => {
-console.log("req.path", req.path);
-console.log("config", config);
-console.log("req.body", req.body);
-console.log("req.method", req.method);
-    if (req.path === config.path && req.method === "POST") { //this matches the config path
-      
+    if (req.path === config.path && req.method === "POST") {
         // data received from fe:
         const {
           email,
